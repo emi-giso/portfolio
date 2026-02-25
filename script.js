@@ -1,160 +1,98 @@
 /* ============================================
    EMILIA GISO — PORTFOLIO
-   Interactivity & Animations
+   Interactivity
    ============================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // --- Scroll Reveal (Intersection Observer) ---
-  const revealElements = document.querySelectorAll('.reveal');
-  
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        // Once revealed, stop observing
-        revealObserver.unobserve(entry.target);
+  // --- Reveal on Scroll ---
+  const revealEls = document.querySelectorAll('.rv');
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('vis');
+        obs.unobserve(e.target);
       }
     });
-  }, {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-  });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 
-  revealElements.forEach(el => revealObserver.observe(el));
+  revealEls.forEach(el => obs.observe(el));
 
 
-  // --- Navbar Scroll Effect ---
-  const navbar = document.getElementById('navbar');
-  
-  const handleNavScroll = () => {
-    if (window.scrollY > 50) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
-    }
+  // --- Nav scroll effect ---
+  const nav = document.getElementById('navbar');
+
+  const onScroll = () => {
+    nav.classList.toggle('scrolled', window.scrollY > 50);
   };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
 
-  window.addEventListener('scroll', handleNavScroll, { passive: true });
-  handleNavScroll(); // Initial check
 
-
-  // --- Active Nav Link Highlight ---
+  // --- Active nav link ---
   const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-links a');
+  const links = document.querySelectorAll('.nav-links a');
 
   const highlightNav = () => {
-    const scrollPos = window.scrollY + 120;
-
-    sections.forEach(section => {
-      const top = section.offsetTop;
-      const height = section.offsetHeight;
-      const id = section.getAttribute('id');
-
-      if (scrollPos >= top && scrollPos < top + height) {
-        navLinks.forEach(link => {
-          link.classList.remove('active');
-          if (link.getAttribute('href') === `#${id}`) {
-            link.classList.add('active');
-          }
+    const y = window.scrollY + 120;
+    sections.forEach(s => {
+      if (y >= s.offsetTop && y < s.offsetTop + s.offsetHeight) {
+        const id = s.getAttribute('id');
+        links.forEach(l => {
+          l.classList.toggle('active', l.getAttribute('href') === `#${id}`);
         });
       }
     });
   };
-
   window.addEventListener('scroll', highlightNav, { passive: true });
   highlightNav();
 
 
-  // --- Mobile Hamburger Menu ---
+  // --- Hamburger ---
   const hamburger = document.getElementById('hamburger');
-  const navLinksContainer = document.getElementById('navLinks');
+  const navLinks = document.getElementById('navLinks');
 
   hamburger.addEventListener('click', () => {
     hamburger.classList.toggle('active');
-    navLinksContainer.classList.toggle('active');
+    navLinks.classList.toggle('active');
   });
 
-  // Close mobile menu when clicking a link
-  navLinksContainer.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
       hamburger.classList.remove('active');
-      navLinksContainer.classList.remove('active');
+      navLinks.classList.remove('active');
     });
   });
 
 
-  // --- Smooth Scroll for Nav Links ---
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', (e) => {
+  // --- Smooth scroll ---
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', (e) => {
       e.preventDefault();
-      const target = document.querySelector(anchor.getAttribute('href'));
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth' });
-      }
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
     });
   });
 
 
-  // --- Contact Form (prevent default, show feedback) ---
-  const contactForm = document.getElementById('contactForm');
-  
-  if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
+  // --- Contact form ---
+  const form = document.getElementById('contactForm');
+  if (form) {
+    form.addEventListener('submit', (e) => {
       e.preventDefault();
-      
-      const submitBtn = contactForm.querySelector('.form-submit');
-      const originalText = submitBtn.textContent;
-      
-      submitBtn.textContent = '¡Mensaje enviado! ✅';
-      submitBtn.style.background = '#22c55e';
-      submitBtn.disabled = true;
-      
+      const btn = form.querySelector('.form-btn');
+      const orig = btn.textContent;
+      btn.textContent = '¡Enviado! ✅';
+      btn.style.background = '#22c55e';
+      btn.disabled = true;
       setTimeout(() => {
-        submitBtn.textContent = originalText;
-        submitBtn.style.background = '';
-        submitBtn.disabled = false;
-        contactForm.reset();
+        btn.textContent = orig;
+        btn.style.background = '';
+        btn.disabled = false;
+        form.reset();
       }, 3000);
     });
   }
 
-
-  // --- Parallax effect on hero orbs ---
-  const hero = document.querySelector('.hero');
-  
-  if (hero) {
-    window.addEventListener('mousemove', (e) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 20;
-      const y = (e.clientY / window.innerHeight - 0.5) * 20;
-      
-      hero.style.setProperty('--mouse-x', `${x}px`);
-      hero.style.setProperty('--mouse-y', `${y}px`);
-    }, { passive: true });
-  }
-
 });
-
-
-// --- Toggle Project Cards (global function for onclick) ---
-function toggleProject(projectId) {
-  const card = document.getElementById(projectId);
-  if (!card) return;
-
-  // Close other open cards
-  document.querySelectorAll('.project-card.active').forEach(openCard => {
-    if (openCard.id !== projectId) {
-      openCard.classList.remove('active');
-    }
-  });
-
-  // Toggle this card
-  card.classList.toggle('active');
-  
-  // Smooth scroll to card if opening
-  if (card.classList.contains('active')) {
-    setTimeout(() => {
-      card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }, 100);
-  }
-}
