@@ -10,6 +10,7 @@
     <meta property="og:description"
         content="Estrategia de comunicación, social media, producción audiovisual y prensa.">
     <title>Emilia Giso — Portfolio</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -34,6 +35,7 @@
 
 
     <!-- ========== HERO ========== -->
+    <!-- Fix 8: Removed scroll-cue indicator (classic AI template tell) -->
     <section class="slide-hero" id="hero">
         <div class="hero-inner">
             <p class="hero-hi rv">Hola, soy</p>
@@ -47,11 +49,11 @@
                 <a href="#contact" class="btn btn-outline">Hablemos</a>
             </div>
         </div>
-        <div class="scroll-cue">scroll<span></span></div>
     </section>
 
 
     <!-- ========== ABOUT ========== -->
+    <!-- Fix 6: Keeps section-tag here — it adds value for context -->
     <section class="slide-section" id="about">
         <div class="slide-inner">
             <span class="section-tag rv">Sobre mí</span>
@@ -116,13 +118,12 @@
 
 
     <!-- ========== PROJECTS ========== -->
+    <!-- Fix 6: No section-tag on projects — the numbering system is identity enough -->
     <section id="projects">
 
-        <!-- DIVIDER -->
         <div class="slide-section" style="padding-bottom:40px;">
             <div class="slide-inner">
-                <span class="section-tag rv">Proyectos</span>
-                <h2 class="section-heading rv rv-d1">
+                <h2 class="section-heading rv">
                     Cada marca es un <span class="italic">mundo</span>.<br>
                     Así los abordé.
                 </h2>
@@ -277,7 +278,8 @@
 
 
         <!-- PROJECT 4: Huinca Cine + Festival Wateke -->
-        <div class="project-slide rv" data-theme="huinca">
+        <!-- Fix 1: featured variant — single column stacked -->
+        <div class="project-slide project-slide--featured rv" data-theme="huinca">
             <span class="project-num">04</span>
             <div class="project-inner">
                 <div class="project-meta">
@@ -466,53 +468,35 @@
 
 
     <!-- ========== SKILLS ========== -->
+    <!-- Fix 6: Tag only, no heading — the tag IS the heading here -->
+    <!-- Fix 7: Editorial flat-list, no cards, no emoji icons -->
     <section class="slide-section" id="skills">
         <div class="slide-inner">
-            <span class="section-tag rv">Skills</span>
-            <h2 class="section-heading rv rv-d1">
+            <h2 class="section-heading rv">
                 Con qué <span class="italic">trabajo</span>
             </h2>
 
-            <div class="skills-row">
-                <div class="skill-card rv rv-d1">
-                    <h3>📱 Estrategia Digital</h3>
-                    <ul>
-                        <li>Social media management (IG, LI, FB, TW, Blog)</li>
-                        <li>Content strategy & calendar planning</li>
-                        <li>Meta Ads — pauta publicitaria</li>
-                        <li>Analytics & reportes de métricas</li>
-                        <li>Mantenimiento de web (WordPress, Wix)</li>
-                    </ul>
+            <div class="skills-grid">
+                <div class="skill-group rv rv-d1">
+                    <h3>Estrategia Digital</h3>
+                    <p>Social media management (IG, LinkedIn, Facebook, Twitter, Blog) · Content strategy & calendar
+                        planning · Meta Ads — pauta publicitaria · Analytics & reportes de métricas · Mantenimiento de
+                        web (WordPress, Wix)</p>
                 </div>
-                <div class="skill-card rv rv-d2">
-                    <h3>🎬 Producción & Contenido</h3>
-                    <ul>
-                        <li>Cobertura de eventos en vivo</li>
-                        <li>Edición de video y reels</li>
-                        <li>Diseño gráfico (Adobe Suite)</li>
-                        <li>Producción en set — asistencia integral</li>
-                        <li>Fotografía y contenido multimedial</li>
-                    </ul>
+                <div class="skill-group rv rv-d2">
+                    <h3>Producción & Contenido</h3>
+                    <p>Cobertura de eventos en vivo · Edición de video y reels · Diseño gráfico (Adobe Suite) ·
+                        Producción en set — asistencia integral · Fotografía y contenido multimedial</p>
                 </div>
-                <div class="skill-card rv rv-d3">
-                    <h3>📰 Comunicación</h3>
-                    <ul>
-                        <li>Comunicación institucional (interna/externa)</li>
-                        <li>Gestión de prensa y medios</li>
-                        <li>Copywriting y redacción</li>
-                        <li>Traducción profesional EN ↔ ES (C2)</li>
-                        <li>Contacto con directores y stakeholders</li>
-                    </ul>
+                <div class="skill-group rv rv-d3">
+                    <h3>Comunicación</h3>
+                    <p>Comunicación institucional (interna/externa) · Gestión de prensa y medios · Copywriting y
+                        redacción · Traducción profesional EN ↔ ES (C2) · Contacto con directores y stakeholders</p>
                 </div>
-                <div class="skill-card rv rv-d4">
-                    <h3>🛠️ Herramientas</h3>
-                    <ul>
-                        <li>Adobe Suite (Intermedio)</li>
-                        <li>Microsoft Office (Avanzado)</li>
-                        <li>WordPress & Wix</li>
-                        <li>Meta Ads Manager</li>
-                        <li>Plataformas de analytics</li>
-                    </ul>
+                <div class="skill-group rv rv-d4">
+                    <h3>Herramientas</h3>
+                    <p>Adobe Suite (Intermedio) · Microsoft Office (Avanzado) · WordPress & Wix · Meta Ads Manager ·
+                        Plataformas de analytics</p>
                 </div>
             </div>
         </div>
@@ -520,6 +504,7 @@
 
 
     <!-- ========== FORMATION ========== -->
+    <!-- Fix 6: Keeps section-tag here — adds educational context -->
     <section class="slide-section" id="formation">
         <div class="slide-inner">
             <span class="section-tag rv">Formación</span>
@@ -560,18 +545,18 @@
                 </div>
             </div>
 
-            <!-- Social impact, integrated -->
+            <!-- Social impact -->
             <div style="margin-top:60px;">
                 <h2 class="section-heading rv" style="font-size:1.4rem;">
                     Y también, fuera de lo profesional
                 </h2>
                 <div class="impact-duo">
                     <div class="social-card rv rv-d1">
-                        <h3>🎗️ Festival Solidario</h3>
+                        <h3>Festival Solidario</h3>
                         <p>Organización y difusión de eventos solidarios — comunicación aplicada a causas reales.</p>
                     </div>
                     <div class="social-card rv rv-d2">
-                        <h3>🚗 Conduciendo a Conciencia</h3>
+                        <h3>Conduciendo a Conciencia</h3>
                         <p class="years">2014 — Presente · +12 años</p>
                         <p>Más de una década en concientización vial. No es un voluntariado — es un compromiso.</p>
                     </div>
@@ -582,25 +567,26 @@
 
 
     <!-- ========== CONTACT ========== -->
+    <!-- Fix 6: Heading only, no tag — the question IS the intro -->
     <section class="slide-section" id="contact">
         <div class="slide-inner">
             <div class="contact-cols">
                 <div class="contact-info">
-                    <span class="section-tag rv">Contacto</span>
-                    <h2 class="section-heading rv rv-d1">
+                    <h2 class="section-heading rv">
                         ¿Tenés un proyecto?<br><span class="italic">Hablemos.</span>
                     </h2>
-                    <p class="rv rv-d2">
+                    <p class="rv rv-d1">
                         Si necesitás alguien que piense la estrategia y también la ejecute, escribime.
                     </p>
-                    <div class="contact-list rv rv-d3">
+                    <div class="contact-list rv rv-d2">
                         <a href="mailto:emigiso@hotmail.com" class="contact-item">✉️ emigiso@hotmail.com</a>
                         <a href="tel:+5401166100505" class="contact-item">📱 011 6610-0505</a>
                         <a href="https://www.linkedin.com/in/emiliagiso" target="_blank" class="contact-item">💼
                             LinkedIn</a>
                     </div>
                 </div>
-                <form class="contact-form rv rv-d3" id="contactForm">
+                <!-- Fix 8: Removed sparkle emoji from submit button -->
+                <form class="contact-form rv rv-d2" id="contactForm">
                     <div class="form-group">
                         <label for="name">Nombre</label>
                         <input type="text" id="name" placeholder="Tu nombre" required>
@@ -613,7 +599,7 @@
                         <label for="message">Mensaje</label>
                         <textarea id="message" placeholder="Contame qué necesitás..." required></textarea>
                     </div>
-                    <button type="submit" class="form-btn">Enviar ✨</button>
+                    <button type="submit" class="form-btn">Enviar</button>
                 </form>
             </div>
         </div>

@@ -1,9 +1,10 @@
 /* ============================================
    EMILIA GISO — PORTFOLIO
-   Slide-based · Each project = its own world
+   v3 — anti-generic pass
    ============================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+/* Fix 3: Swap Inter+Outfit (most AI-flagged combo) → Sora + DM Sans */
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
 
 /* --- Tokens --- */
 :root {
@@ -18,9 +19,12 @@
   --text-muted: rgba(238, 232, 220, 0.3);
   --gold: #c9a84c;
   --gold-glow: rgba(201, 168, 76, 0.12);
+  /* Fix 8: secondary warm accent for variety */
+  --warm: #c97a4c;
 
-  --font-h: 'Outfit', sans-serif;
-  --font-b: 'Inter', sans-serif;
+  /* Fix 3: new font vars */
+  --font-h: 'Sora', sans-serif;
+  --font-b: 'DM Sans', sans-serif;
   --font-accent: 'Playfair Display', serif;
 
   --ease: cubic-bezier(.4, 0, .2, 1);
@@ -78,6 +82,7 @@ img {
   max-width: 100%;
   display: block;
 }
+
 
 /* --- Nav --- */
 .nav {
@@ -188,7 +193,7 @@ img {
 }
 
 
-/* ===== HERO — full-viewport intro slide ===== */
+/* ===== HERO ===== */
 .slide-hero {
   min-height: 100vh;
   display: flex;
@@ -197,14 +202,25 @@ img {
   overflow: hidden;
 }
 
+/* Fix 4: Remove purple gradient orb. Single subtle warm glow only */
 .slide-hero::before {
   content: '';
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(ellipse 60% 50% at 70% 30%, rgba(201, 168, 76, .07) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 60% at 20% 80%, rgba(180, 130, 255, .05) 0%, transparent 60%);
+  background: radial-gradient(ellipse 50% 45% at 65% 35%, rgba(201, 168, 76, .06) 0%, transparent 60%);
   pointer-events: none;
+}
+
+/* Fix 4: Add subtle film grain for analog texture */
+.slide-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: .03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 128px 128px;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .hero-inner {
@@ -227,21 +243,21 @@ img {
 .hero-name {
   font-family: var(--font-h);
   font-size: clamp(3rem, 7vw, 5.5rem);
-  font-weight: 900;
+  font-weight: 800;
   line-height: 1;
   margin-bottom: 20px;
 }
 
 .hero-name .em {
   display: inline-block;
-  background: linear-gradient(135deg, var(--gold) 0%, #e0c56a 40%, #c97a4c 100%);
+  background: linear-gradient(135deg, var(--gold) 0%, #e0c56a 40%, var(--warm) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .hero-sub {
-  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-size: clamp(1rem, 2vw, 1.15rem);
   color: var(--text-dim);
   max-width: 520px;
   margin-bottom: 36px;
@@ -259,12 +275,12 @@ img {
   flex-wrap: wrap;
 }
 
+/* Fix 8: Mixed button shapes — primary squarish, secondary pill */
 .btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   padding: 13px 30px;
-  border-radius: 999px;
   font-family: var(--font-h);
   font-size: .88rem;
   font-weight: 500;
@@ -277,63 +293,31 @@ img {
 .btn-gold {
   background: var(--gold);
   color: var(--bg);
+  border-radius: 6px;
+  /* Fix 8: not pill */
 }
 
 .btn-gold:hover {
   background: #e0c56a;
   color: var(--bg);
   box-shadow: 0 0 30px var(--gold-glow);
-  transform: translateY(-2px);
 }
 
 .btn-outline {
   background: transparent;
   color: var(--text);
   border: 1px solid var(--border-hover);
+  border-radius: 999px;
+  /* keeps pill for contrast */
 }
 
 .btn-outline:hover {
   border-color: var(--gold);
   color: var(--gold);
-  transform: translateY(-2px);
-}
-
-.scroll-cue {
-  position: absolute;
-  bottom: 32px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: .7rem;
-  color: var(--text-muted);
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  animation: cue-bounce 2.5s ease-in-out infinite;
-}
-
-.scroll-cue span {
-  width: 1px;
-  height: 24px;
-  background: var(--text-muted);
-}
-
-@keyframes cue-bounce {
-
-  0%,
-  100% {
-    transform: translateX(-50%) translateY(0);
-  }
-
-  50% {
-    transform: translateX(-50%) translateY(8px);
-  }
 }
 
 
-/* ===== SECTION: INTRO / ABOUT — conversational ===== */
+/* ===== SECTIONS — general layout ===== */
 .slide-section {
   position: relative;
   z-index: 1;
@@ -346,6 +330,7 @@ img {
   padding: 0 28px;
 }
 
+/* Fix 6: Section tag — keep the dash-prefix only where used explicitly */
 .section-tag {
   display: inline-block;
   font-family: var(--font-h);
@@ -355,12 +340,6 @@ img {
   text-transform: uppercase;
   letter-spacing: 3px;
   margin-bottom: 14px;
-}
-
-.section-tag::before {
-  content: '—';
-  margin-right: 8px;
-  opacity: .5;
 }
 
 .section-heading {
@@ -377,7 +356,7 @@ img {
 }
 
 
-/* ===== ABOUT GRID ===== */
+/* ===== ABOUT ===== */
 .about-cols {
   display: grid;
   grid-template-columns: 1.3fr 1fr;
@@ -409,6 +388,7 @@ img {
   margin-top: 24px;
 }
 
+/* Fix 8: chips keep pill shape since they're tags */
 .chip {
   padding: 7px 18px;
   border-radius: 999px;
@@ -424,45 +404,42 @@ img {
   color: var(--gold);
 }
 
+/* Fix 2: Evidence cards — no background/glass, editorial style with left gold border */
 .about-evidence {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
 }
 
 .evidence-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 24px;
-  transition: all .3s var(--ease);
+  border-left: 3px solid var(--gold);
+  padding: 8px 0 8px 20px;
+  transition: border-color .3s var(--ease);
 }
 
+/* Fix 5: No lift, just subtle border intensify */
 .evidence-card:hover {
-  border-color: var(--border-hover);
-  transform: translateY(-3px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, .3);
+  border-left-color: #e0c56a;
 }
 
 .evidence-card .num {
   font-family: var(--font-h);
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: 800;
   color: var(--gold);
   line-height: 1;
 }
 
 .evidence-card .lbl {
-  font-size: .8rem;
+  font-size: .78rem;
   color: var(--text-dim);
-  margin-top: 4px;
+  margin-top: 2px;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
 
 /* ===== PROJECT SLIDES ===== */
-/* Each project slide is a full-width section with its own vibe */
 .project-slide {
   position: relative;
   min-height: 80vh;
@@ -472,48 +449,60 @@ img {
   border-top: 1px solid var(--border);
 }
 
-/* Color themes per project — applied via data-theme */
+/* Color themes per project */
 .project-slide[data-theme="welojets"] {
   --proj-accent: #38bdf8;
-  --proj-glow: rgba(56, 189, 248, .08);
+  --proj-glow: rgba(56, 189, 248, .06);
 }
 
 .project-slide[data-theme="edhasa"] {
   --proj-accent: #f59e0b;
-  --proj-glow: rgba(245, 158, 11, .08);
+  --proj-glow: rgba(245, 158, 11, .06);
 }
 
 .project-slide[data-theme="riverside"] {
   --proj-accent: #a78bfa;
-  --proj-glow: rgba(167, 139, 250, .08);
+  --proj-glow: rgba(167, 139, 250, .06);
 }
 
 .project-slide[data-theme="huinca"] {
   --proj-accent: #f472b6;
-  --proj-glow: rgba(244, 114, 182, .08);
+  --proj-glow: rgba(244, 114, 182, .06);
 }
 
 .project-slide[data-theme="prensa"] {
   --proj-accent: #34d399;
-  --proj-glow: rgba(52, 211, 153, .08);
+  --proj-glow: rgba(52, 211, 153, .06);
 }
 
 .project-slide[data-theme="produccion"] {
   --proj-accent: #fb923c;
-  --proj-glow: rgba(251, 146, 60, .08);
+  --proj-glow: rgba(251, 146, 60, .06);
 }
 
 .project-slide[data-theme="olimpicos"] {
   --proj-accent: #60a5fa;
-  --proj-glow: rgba(96, 165, 250, .08);
+  --proj-glow: rgba(96, 165, 250, .06);
 }
 
 .project-slide::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 50% 50% at 80% 50%, var(--proj-glow, rgba(201, 168, 76, .06)) 0%, transparent 70%);
+  background: radial-gradient(ellipse 50% 50% at 80% 50%, var(--proj-glow, rgba(201, 168, 76, .04)) 0%, transparent 70%);
   pointer-events: none;
+}
+
+/* Fix 1: Accent stripe on left edge — uses project color */
+.project-slide::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--proj-accent, var(--gold));
+  opacity: .4;
 }
 
 .project-inner {
@@ -529,13 +518,29 @@ img {
   z-index: 1;
 }
 
+/* Fix 1: Even project slides reverse the column order */
+.project-slide:nth-child(even) .project-inner {
+  direction: rtl;
+}
+
+.project-slide:nth-child(even) .project-inner>* {
+  direction: ltr;
+}
+
+/* Fix 1: Featured project (Huinca) — full-width stacked layout */
+.project-slide--featured .project-inner {
+  grid-template-columns: 1fr;
+  max-width: 800px;
+  text-align: left;
+}
+
 .project-num {
   font-family: var(--font-h);
   font-size: clamp(5rem, 10vw, 8rem);
-  font-weight: 900;
+  font-weight: 800;
   line-height: 1;
   color: var(--proj-accent, var(--gold));
-  opacity: .1;
+  opacity: .08;
   position: absolute;
   top: 20px;
   right: 40px;
@@ -583,12 +588,10 @@ img {
   font-weight: 500;
 }
 
-/* The "what I actually did" block */
+/* Fix 2: "What I did" — left-border indent instead of card */
 .project-did {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 20px 24px;
+  border-left: 2px solid var(--proj-accent, var(--gold));
+  padding: 4px 0 4px 20px;
   margin-bottom: 20px;
 }
 
@@ -628,15 +631,16 @@ img {
   gap: 10px;
 }
 
+/* Fix 5: project link hover = underline, no lift */
 .project-link {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 18px;
-  border-radius: 999px;
+  padding: 8px 16px;
+  border-radius: 6px;
   font-size: .78rem;
   font-weight: 500;
-  background: rgba(255, 255, 255, .04);
+  background: rgba(255, 255, 255, .03);
   border: 1px solid var(--border-hover);
   color: var(--text-dim);
   transition: all .25s var(--ease);
@@ -645,10 +649,9 @@ img {
 .project-link:hover {
   border-color: var(--proj-accent, var(--gold));
   color: var(--proj-accent, var(--gold));
-  transform: translateY(-2px);
 }
 
-/* Project right-side visual / impact */
+/* Fix 2: Impact blocks — top accent line, no rounded card shape */
 .project-impact {
   display: flex;
   flex-direction: column;
@@ -656,16 +659,13 @@ img {
 }
 
 .impact-block {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 28px;
-  transition: all .3s var(--ease);
+  border-top: 2px solid var(--proj-accent, var(--gold));
+  padding: 20px 0 0 0;
 }
 
+/* Fix 5: No lift on hover — just opacity shift */
 .impact-block:hover {
-  border-color: var(--border-hover);
-  transform: translateY(-3px);
+  opacity: .85;
 }
 
 .impact-block h4 {
@@ -693,46 +693,32 @@ img {
 }
 
 
-/* ===== SKILLS — minimal grid ===== */
-.skills-row {
+/* ===== SKILLS — Fix 7: editorial flat-list, no cards ===== */
+.skills-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px 60px;
 }
 
-.skill-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 28px;
-  transition: all .3s var(--ease);
+.skill-group {
+  padding-top: 16px;
+  border-top: 1px solid var(--border-hover);
 }
 
-.skill-card:hover {
-  border-color: var(--border-hover);
-  transform: translateY(-3px);
-  box-shadow: 0 6px 24px rgba(0, 0, 0, .25);
+.skill-group h3 {
+  font-size: .8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text);
+  margin-bottom: 14px;
 }
 
-.skill-card h3 {
-  font-size: 1rem;
-  margin-bottom: 16px;
-}
-
-.skill-card ul {
-  list-style: none;
-  padding: 0;
-}
-
-.skill-card li {
-  font-size: .88rem;
+.skill-group p {
+  font-size: .92rem;
   color: var(--text-dim);
-  padding: 5px 0;
-  border-bottom: 1px solid var(--border);
-}
-
-.skill-card li:last-child {
-  border-bottom: none;
+  line-height: 1.8;
+  max-width: none;
 }
 
 
@@ -799,36 +785,38 @@ img {
 }
 
 
-/* ===== SOCIAL / IMPACT ===== */
+/* ===== SOCIAL IMPACT ===== */
 .impact-duo {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
 }
 
+/* Fix 2: Social cards — first gets filled accent, second stays outlined */
 .social-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px;
   padding: 32px;
   position: relative;
   overflow: hidden;
   transition: all .3s var(--ease);
+  border-radius: 4px;
 }
 
-.social-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--gold), #c97a4c);
+/* First card: warm-tinted fill */
+.social-card:first-child {
+  background: rgba(201, 168, 76, .06);
+  border: 1px solid rgba(201, 168, 76, .15);
 }
 
+/* Second card: outlined only */
+.social-card:last-child {
+  background: transparent;
+  border: 1px solid var(--border-hover);
+  border-left: 3px solid var(--warm);
+}
+
+/* Fix 5: No lift — border intensifies */
 .social-card:hover {
-  border-color: var(--border-hover);
-  transform: translateY(-3px);
+  border-color: rgba(201, 168, 76, .3);
 }
 
 .social-card h3 {
@@ -867,29 +855,29 @@ img {
   gap: 12px;
 }
 
+/* Fix 2: Contact items — no glass, simple left-accent */
 .contact-item {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  padding: 14px 20px;
-  border-radius: 12px;
-  background: var(--surface);
-  border: 1px solid var(--border);
+  padding: 12px 0 12px 16px;
+  border-left: 2px solid var(--border-hover);
   color: var(--text-dim);
   font-size: .92rem;
-  transition: all .3s var(--ease);
+  transition: all .25s var(--ease);
 }
 
+/* Fix 5: slide right + border color change */
 .contact-item:hover {
-  border-color: var(--gold);
+  border-left-color: var(--gold);
   color: var(--gold);
-  transform: translateX(6px);
+  padding-left: 22px;
 }
 
 .contact-form {
-  background: var(--surface);
+  background: var(--bg-soft);
   border: 1px solid var(--border);
-  border-radius: 16px;
+  border-radius: 4px;
   padding: 32px;
 }
 
@@ -914,7 +902,7 @@ img {
   padding: 12px 16px;
   background: var(--bg);
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: 4px;
   color: var(--text);
   font-family: var(--font-b);
   font-size: .92rem;
@@ -939,7 +927,7 @@ img {
   background: var(--gold);
   color: var(--bg);
   border: none;
-  border-radius: 10px;
+  border-radius: 4px;
   font-family: var(--font-h);
   font-size: .95rem;
   font-weight: 600;
@@ -950,7 +938,6 @@ img {
 .form-btn:hover {
   background: #e0c56a;
   box-shadow: 0 0 30px var(--gold-glow);
-  transform: translateY(-2px);
 }
 
 
@@ -1017,10 +1004,20 @@ img {
     gap: 36px;
   }
 
+  /* Fix 1: disable reverse on mobile -- single column */
+  .project-slide:nth-child(even) .project-inner {
+    direction: ltr;
+  }
+
   .project-num {
     font-size: 5rem;
     top: 10px;
     right: 20px;
+  }
+
+  .skills-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
   }
 }
 
@@ -1074,10 +1071,6 @@ img {
   .impact-duo {
     grid-template-columns: 1fr;
   }
-
-  .scroll-cue {
-    display: none;
-  }
 }
 
 @media(max-width:480px) {
@@ -1089,7 +1082,7 @@ img {
     padding: 0 16px;
   }
 
-  .skills-row {
+  .skills-grid {
     grid-template-columns: 1fr;
   }
 }
